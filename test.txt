@@ -1,0 +1,28 @@
+Questo e' un file di testo utilizzato per verificato il corretto funzionamento
+della connessione di tipo FTP (File Transport Protocol) implementato con C++
+mediante l'utilizzo della programmazzione OOP.
+Ho creato due classi, Server e Client:
+La classe Server ha come attributi il numero di porta su cui e' in ascolto
+e il socket pronto ad essere instanziato, entrambi privati.
+Per i metodi oltre al costruttore e al distruttore ce ne sta un terzo pubblico,
+il metodono run() e non fa altro che creare un ciclo infinito perennemente
+in ascolto per nuove connessioni. Gli altri due metodi privati sono handleCLient
+e sendFIle che, rispettivamente, uno gestisce la connessione con il client quando
+quest'ultimo "bussa" al server; mentre l'altro e' il colpevole della trasmissione del file.
+
+La classe Client ha come attributi l'indirizzp IP del server, il numero di porta su cui
+il server e' in ascolto e anche qui il socket pronto ad essere instanziato.
+Come metodi ne ha solo un privato e uno pubblico:
+Il metodo pubblico downloadFile che prende in ingresso il nome del file che si vuole
+scaricare, prova a fare la connessione al server richiamando il metodo privato
+connectToServer, quest'ultimo istanza il socket del client; prova a connettersi al socket
+del server tramite IP e numero di porta e se tutto va bene permette di continuare l'
+esecuzione del metodo downloadFIle. Quest'ultimo manda al server il nome del file che
+si vuole scaricare e aspetta di ricevere un dato, cioe' la dimensione del file, se esiste.
+Nel caso in cui il file esiste e sappiamo la sua dimensione procediamo creando sul disco
+del Client un file vuoto da riempire, lo riempiamo utilizzando un buffer che viene caricato
+in modo binario di 4096byte (4kb) alla volta dal Server, il Client non fa altro che ricopiare
+in modo binaio il contenuto del buffer sul file appena creato nel disco.
+Ad ogni iterazione aggiorno il contatore dei byte scaricati e mi fermo quando arrivo alla
+dimensione del file del server che gia' conoscevo in precedenza.
+Una volta finita questa procedura posso chiudere la connessione in modo sicuro. 
